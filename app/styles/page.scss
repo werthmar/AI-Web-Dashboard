@@ -1,0 +1,54 @@
+@import "./globals.scss";
+
+.Page{
+    height: 100%;
+    width: 100%;
+    height: 100vh;
+    width: 100vw;
+
+    // Sidebar used for Navigation
+    .sidebar{
+        background-color: #1f2937;
+        text-align: center;
+        align-items: center;
+
+        .homeButton{
+            position: absolute;
+            z-index: 1;
+            left: 100px;
+            margin: 50px auto;
+        }
+
+        .buttons{
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            
+            button{
+                margin: 10px auto;
+                color: white;
+                border-radius: 50px;
+                border: 2px solid white;
+                padding: 10px;
+                width: 220px;
+            }
+            .buttonActive {
+                color: black;
+                background-color: rgb(255, 255, 255);
+            }
+            button:hover{
+                color: black;
+                background-color: rgb(255, 255, 255);
+            }
+        }
+    }
+    
+    // Vieport content gets taken from the individuall components, this is just the setup
+    // for the base dimensions of the viewport not the content within it
+    .viewport{
+        overflow: scroll;
+        //background-color: pink;
+    }
+
+}
