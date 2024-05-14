@@ -4,6 +4,7 @@ import { Container } from "postcss";
 import React, { useState } from "react";
 import LoadingAnimation from "./components/loading";
 import Stallmonitor from "./components/stallmonitor";
+import Assistenzsystem from "./components/assistenzsystem";
 
 export default class Page extends React.Component
 {
@@ -35,6 +36,10 @@ export default class Page extends React.Component
       {
         return( <Stallmonitor /> );
       }
+      else if ( activeButton === 2 )
+      {
+        return( <Assistenzsystem messages={ ["This is the first message.", "This is another message, you can mark messages as read by clicking on the appropriate Button"] } /> );
+      }
       else {
         return( <p>Error!</p> );
       }
@@ -55,7 +60,8 @@ export default class Page extends React.Component
 
         {/* Sidebar */}
         <div className="sidebar w-80">
-          <Image alt="smartMILK Logo" className="homeButton" src={"/milkIconTest.png"} width={100} height={100} />
+          
+          <Image alt="smartMILK Logo" className="homeButton" src={"/smartMILC_Logo.jpg"} width={250} height={250} />
           
           <div className="buttons flex flex-col mt-4">
             <button onClick={() => this.handleButtonClick(1)} className={activeButton === 1 ? 'buttonActive' : ''}>Stallmonitor</button>
@@ -65,6 +71,8 @@ export default class Page extends React.Component
             <button onClick={() => this.handleButtonClick(5)} className={activeButton === 5 ? 'buttonActive' : ''}>Herdeninformationen</button>
             <button onClick={() => this.handleButtonClick(6)} className={activeButton === 6 ? 'buttonActive' : ''}>Einzeltierinformationen</button>
           </div>
+
+          <a href="/impressum" className="impressum">Impressum</a>
 
         </div>
         

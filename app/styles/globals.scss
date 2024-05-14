@@ -18,8 +18,25 @@
 }
 */
 
+// global variables
+$primary-color: #1f2937;
+
+
+
 body {
 
+}
+
+.btn{
+  margin: auto;
+  padding: 10px;
+  border-radius: 25px;
+  border: black 2px solid;
+  background-color: transparent;
+  color: black;
+}
+.btn:hover{
+  background-color: #8eccfb;
 }
 
 .center{

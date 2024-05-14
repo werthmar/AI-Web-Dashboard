@@ -1,0 +1,28 @@
+@import './globals.scss';
+
+.Assistenzsystem{
+
+    .message-container {
+        display: flex;
+        flex-direction: column;
+        border: black solid 1px;
+        border-radius: 25px;
+        padding: 10px;
+        max-width: 90%;
+    }
+    
+    .message {
+        max-width: 70%;
+        padding: 8px 12px;
+        margin: 4px;
+        border-radius: 0px 8px 8px 8px;
+        align-self: flex-start;
+        background-color: #8eccfb;
+    }
+    
+    .buttons{
+        align-items: center;
+        text-align: center;
+    }
+    
+}

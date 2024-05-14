@@ -8,15 +8,16 @@
 
     // Sidebar used for Navigation
     .sidebar{
-        background-color: #1f2937;
+        background-color: $primary-color;
         text-align: center;
         align-items: center;
 
         .homeButton{
             position: absolute;
             z-index: 1;
-            left: 100px;
+            left: 40px;
             margin: 50px auto;
+            border-radius: 10px;
         }
 
         .buttons{
@@ -41,6 +42,14 @@
                 color: black;
                 background-color: rgb(255, 255, 255);
             }
+        }
+
+        .impressum{
+            position: absolute;
+            bottom: 50px;
+            left: 120px;
+            color: white;
+            text-decoration: underline;
         }
     }
     
