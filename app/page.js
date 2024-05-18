@@ -41,7 +41,8 @@ export default class Page extends React.Component
         return( <Assistenzsystem messages={ ["This is the first message.", "This is another message, you can mark messages as read by clicking on the appropriate Button"] } /> );
       }
       else {
-        return( <p>Error!</p> );
+        //return( <p>Error!</p> );
+        return <LoadingAnimation />;
       }
     }
     catch (error) {
@@ -61,7 +62,7 @@ export default class Page extends React.Component
         {/* Sidebar */}
         <div className="sidebar w-80">
           
-          <Image alt="smartMILK Logo" className="homeButton" src={"/smartMILC_Logo.jpg"} width={250} height={250} />
+          <Image priority alt="smartMILK Logo" className="homeButton" src={"/smartMILC_Logo.jpg"} width={250} height={250} />
           
           <div className="buttons flex flex-col mt-4">
             <button onClick={() => this.handleButtonClick(1)} className={activeButton === 1 ? 'buttonActive' : ''}>Stallmonitor</button>

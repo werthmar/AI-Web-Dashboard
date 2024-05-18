@@ -16,17 +16,21 @@ export default class Assistenzsystem extends React.Component
         return(
             <div className="center Assistenzsystem">
 
-            <div className="message-container center">
-                {messages.map((message, index) => (
-                    <div key={index} className='message'>
-                        {message}
-                    </div>
-                ))}
-            </div>
-                <div className="grid grid-cols-2 justify-center buttons">
-                    <button className="btn">Als Gelesen Markieren</button>
-                    <button className="btn">Alle Nachrichten Anzeigen</button>
+                <div className="message-container">
+                    {messages.map((message, index) => (
+                        <div key={index} className='message'>
+                            {message}
+                        </div>
+                    ))}
                 </div>
+
+                <div style={{maxWidth: "800px", margin: "20px auto"}}>
+                    <div className="grid grid-cols-2 buttons">
+                        <button className="btn">Als Gelesen Markieren</button>
+                        <button className="btn">Alle Nachrichten Anzeigen</button>
+                    </div>
+                </div>
+
             </div>
         );
     }
