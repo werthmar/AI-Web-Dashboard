@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import LoadingAnimation from "./components/loading";
 import Stallmonitor from "./components/stallmonitor";
 import Assistenzsystem from "./components/assistenzsystem";
+import { FaExclamation } from "react-icons/fa";
 
 export default class Page extends React.Component
 {
@@ -13,20 +14,86 @@ export default class Page extends React.Component
     this.state = {
       activeButton: 1,
       loading: false,
+      messages: [],
+      unreadMessage: false,
     };
+    this.socket = null;
   }
 
+  // --- Assistenzsystem Stream --------------------------------
+  componentDidMount()
+  {
+    // Initialize WebSocket connection
+    this.socket = new WebSocket('wss://your-websocket-url');
+    
+    // Listen for messages
+    this.socket.addEventListener('message', this.handleMessage);
+    
+    // Simulate a message after 3 seconds
+    this.simulateMessageAfterDelay();
+  }
+
+  componentWillUnmount()
+  {
+    // Clean up the WebSocket connection
+    if (this.socket) {
+      this.socket.removeEventListener('message', this.handleMessage);
+      this.socket.close();
+    }
+  }
+  
+  handleMessage = (event) => {
+    const newMessage = event.data;
+    
+    // Update state with the new message
+    this.setState((prevState) => ({
+      messages: [...prevState.messages, newMessage],
+      // Mark the Assistenzsystem button so that the user knows there is a new message
+      unreadMessage: true,
+    }));
+    
+    // Perform any additional actions with the new message
+  };
+  
+  // Method to manually trigger a message event after a delay
+  simulateMessageAfterDelay = () => {
+    setTimeout(() => {
+      const mockEvent = { data: {text: 'Test message after delay', timestamp: this.getTimestamp()} };
+      this.handleMessage(mockEvent);
+    }, 6000); // 6-second delay
+  };
+  
   // --- Functions ---------------------------------------------
   handleButtonClick = (buttonId) => {
-    this.setState({
-     activeButton: buttonId
-    });
+    // Disable the unre4ad notification if the user clicks on it
+    if( buttonId === 2 )
+    {
+      this.setState({
+        activeButton: buttonId,
+        unreadMessage: false,
+      });
+    } 
+    else {
+      this.setState({
+        activeButton: buttonId
+      });
+    }
   };
+
+  getTimestamp () {
+    // create a timestamp for display
+    const now = new Date();
+    var timestamp = `
+      ${String(now.getDate()).padStart(2, '0')}.${String(now.getMonth()).padStart(2, '0')}.${String(now.getFullYear()).padStart(2, '0')} 
+      ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}
+    `;
+    return timestamp;
+  }
 
   // Decide which element to display based on which button is active
   getViewportElement() {
     try {
-      const {loading, activeButton} = this.state;
+      const {loading, activeButton, messages} = this.state;
   
       if( loading )
       {
@@ -38,7 +105,7 @@ export default class Page extends React.Component
       }
       else if ( activeButton === 2 )
       {
-        return( <Assistenzsystem messages={ ["This is the first message.", "This is another message, you can mark messages as read by clicking on the appropriate Button"] } /> );
+        return( <Assistenzsystem messages={ messages } /> );
       }
       else {
         //return( <p>Error!</p> );
@@ -54,7 +121,7 @@ export default class Page extends React.Component
   // --- Render ------------------------------------------------
   render()
   {
-    const {activeButton} = this.state;
+    const {activeButton, unreadMessage} = this.state;
     return(    
 
       <div className="Page flex h-screen">
@@ -66,7 +133,13 @@ export default class Page extends React.Component
           
           <div className="buttons flex flex-col mt-4">
             <button onClick={() => this.handleButtonClick(1)} className={activeButton === 1 ? 'buttonActive' : ''}>Stallmonitor</button>
-            <button onClick={() => this.handleButtonClick(2)} className={activeButton === 2 ? 'buttonActive' : ''}>Assistenzsystem</button>
+            <button 
+              onClick={() => this.handleButtonClick(2)} 
+              className={`flex items-center justify-center ${unreadMessage ? "buttonNotification" : ""} ${activeButton === 2 ? 'buttonActive' : ''}`}>
+                { unreadMessage ? <FaExclamation color="red" /> : "" }
+                <span>Assistenzsystem</span>
+                { unreadMessage ? <FaExclamation color="red" /> : "" }
+            </button>
             <button onClick={() => this.handleButtonClick(3)} className={activeButton === 3 ? 'buttonActive' : ''}>Klimadaten</button>
             <button onClick={() => this.handleButtonClick(4)} className={activeButton === 4 ? 'buttonActive' : ''}>Live-Bild</button>
             <button onClick={() => this.handleButtonClick(5)} className={activeButton === 5 ? 'buttonActive' : ''}>Herdeninformationen</button>

@@ -20,6 +20,7 @@
 
 // global variables
 $primary-color: #1f2937;
+$background-color: rgb(51, 51, 51);
 
 
 
@@ -30,13 +31,15 @@ body {
 .btn{
   padding: 15px 20px 15px 20px;
   border-radius: 50px;
-  background-color: rgb(0, 115, 255);
+  background-color: rgba(255, 255, 255, 0.136); //rgb(0, 115, 255);
   color: white;
   border: 2px solid white;
   max-width: 300px;
 }
 .btn:hover{
-  background-color: #8eccfb;
+  background-color: #ffffff;
+  color: black;
+  transition: all 0.6s ease;
 }
 
 .center{

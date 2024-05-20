@@ -19,17 +19,16 @@ export default class Assistenzsystem extends React.Component
                 <div className="message-container">
                     {messages.map((message, index) => (
                         <div key={index} className='message'>
-                            {message}
+                            <div>{message.text}</div>
+                            <div className="timestamp">{message.timestamp}</div>
                         </div>
                     ))}
                 </div>
 
-                <div style={{maxWidth: "800px", margin: "20px auto"}}>
                     <div className="grid grid-cols-2 buttons">
                         <button className="btn">Als Gelesen Markieren</button>
                         <button className="btn">Alle Nachrichten Anzeigen</button>
                     </div>
-                </div>
 
             </div>
         );
