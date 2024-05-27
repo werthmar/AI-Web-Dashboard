@@ -2,6 +2,10 @@
 
 .Assistenzsystem{
 
+    .message-container::-webkit-scrollbar {
+        width: 0; /* This will hide the scrollbar in webkit browsers like Chrome and Safari */
+    }      
+
     .message-container {
         display: flex;
         flex-direction: column;
@@ -12,23 +16,41 @@
         background-color: white;
         height: 80vh;
         margin: auto;
+        overflow: auto;
 
         -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
         -moz-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
         box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
     }
     
-    .message {
+    @keyframes popup {
+        0% { opacity: 0; transform: translateY(50px); }
+        100% { opacity: 1; transform: translateY(0); }
+      }
+      
+      
+      .message {
         max-width: 70%;
         padding: 8px 12px;
         margin: 4px;
         border-radius: 0px 8px 8px 8px;
         align-self: flex-start;
-        background-color:#8eccfb;
-
+        animation: popup 0.5s ease forwards;
+        
         .timestamp{
             font-size: 8px;
             text-align: end;
+            color: gray;
+        }
+    }
+    .new {
+        background-color:#8eccfb;
+    }
+
+    .old{
+        background-color: grey;
+        .timestamp{
+            color: black;
         }
     }
 
