@@ -7,9 +7,9 @@ export default class Stallmonitor extends React.Component
     constructor(props) {
         super(props);
         this.state = {
-          width: 500,
-          height: 500,
-          padding: 20,
+          width: 1192,
+          height: 505,
+          padding: 0,
           minX: 0,
           maxX: 10,
           minY: 0,
@@ -69,7 +69,7 @@ export default class Stallmonitor extends React.Component
                     <svg width={width} height={height}>
 
                         {/* Background Image */}
-                        <image href={"kuhstall-example.jpg"} x={padding} y={padding} width={width - 2 * padding} height={height - 2 * padding} />
+                        <image href={"Abbildung_LWK_Stall.png"} x={padding} y={padding} width={width - 2 * padding} height={height - 2 * padding} />
 
                         {/* Draw x-axis */}
                         <line x1={padding} y1={height - padding} x2={width - padding} y2={height - padding} stroke="black" />

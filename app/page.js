@@ -6,6 +6,7 @@ import LoadingAnimation from "./components/loading";
 import Stallmonitor from "./components/stallmonitor";
 import Assistenzsystem from "./components/assistenzsystem";
 import { FaExclamation } from "react-icons/fa";
+import VideoPlayer from "./components/videoplayer";
 
 export default class Page extends React.Component
 {
@@ -65,7 +66,7 @@ export default class Page extends React.Component
   
   // --- Functions ---------------------------------------------
   handleButtonClick = (buttonId) => {
-    // Disable the unre4ad notification if the user clicks on it
+    // Disable the unread notification if the user clicks on it
     if( buttonId === 2 )
     {
       this.setState({
@@ -106,6 +107,10 @@ export default class Page extends React.Component
       else if ( activeButton === 2 )
       {
         return( <Assistenzsystem messages={ messages } /> );
+      }
+      else if ( activeButton === 4 )
+      {
+        return( <VideoPlayer /> );
       }
       else {
         //return( <p>Error!</p> );
