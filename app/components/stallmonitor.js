@@ -64,7 +64,9 @@ export default class Stallmonitor extends React.Component
         else
         {
             return (
-                <div className="stallmonitor">
+                <div className="stallmonitor center">
+
+                    <h1>LTW Stall</h1>
 
                     <svg width={width} height={height}>
 

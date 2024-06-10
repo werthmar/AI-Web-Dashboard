@@ -1,12 +1,13 @@
 import "../styles/videoplayer.scss";
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { useState } from "react";
+import { comment } from "postcss";
 
 export default function VideoPlayer() {
 
     const availableStreams = [
-        process.env.NEXT_PUBLIC_CAMERA_1,
-        process.env.NEXT_PUBLIC_CAMERA_2,
+        { camera: process.env.NEXT_PUBLIC_CAMERA_1, name: process.env.NEXT_PUBLIC_CAMERA_1_NAME },
+        { camera: process.env.NEXT_PUBLIC_CAMERA_2, name: process.env.NEXT_PUBLIC_CAMERA_2_NAME },
     ]
     const [streamIndex, setStreamIndex] = useState(0);
 
@@ -31,6 +32,9 @@ export default function VideoPlayer() {
 
     return (
         <div className="center videoplayer">
+
+            <h1>{ availableStreams[ streamIndex ].name }</h1>
+
             <video
                 controls
                 preload="auto"
@@ -39,7 +43,7 @@ export default function VideoPlayer() {
                 autoPlay="true"
                 key={streamIndex}
             >
-                <source src={ availableStreams[ streamIndex ] } type="video/mp4" />
+                <source src={ availableStreams[ streamIndex ].camera } type="video/mp4" />
                 Your browser does not support the video tag.
             </video>
         

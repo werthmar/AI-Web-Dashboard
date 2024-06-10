@@ -5,8 +5,9 @@ import React, { useState } from "react";
 import LoadingAnimation from "./components/loading";
 import Stallmonitor from "./components/stallmonitor";
 import Assistenzsystem from "./components/assistenzsystem";
-import { FaExclamation } from "react-icons/fa";
 import VideoPlayer from "./components/videoplayer";
+import { BsExclamationCircle } from "react-icons/bs";
+import Klimadaten from "./components/klimadaten";
 
 export default class Page extends React.Component
 {
@@ -108,6 +109,10 @@ export default class Page extends React.Component
       {
         return( <Assistenzsystem messages={ messages } /> );
       }
+      else if ( activeButton === 3 )
+      {
+        return( <Klimadaten /> );
+      }
       else if ( activeButton === 4 )
       {
         return( <VideoPlayer /> );
@@ -141,9 +146,8 @@ export default class Page extends React.Component
             <button 
               onClick={() => this.handleButtonClick(2)} 
               className={`flex items-center justify-center ${unreadMessage ? "buttonNotification" : ""} ${activeButton === 2 ? 'buttonActive' : ''}`}>
-                { unreadMessage ? <FaExclamation color="red" /> : "" }
                 <span>Assistenzsystem</span>
-                { unreadMessage ? <FaExclamation color="red" /> : "" }
+                { unreadMessage ? <BsExclamationCircle className="exclamationIcon" color="red" size={40} /> : "" }
             </button>
             <button onClick={() => this.handleButtonClick(3)} className={activeButton === 3 ? 'buttonActive' : ''}>Klimadaten</button>
             <button onClick={() => this.handleButtonClick(4)} className={activeButton === 4 ? 'buttonActive' : ''}>Live-Bild</button>

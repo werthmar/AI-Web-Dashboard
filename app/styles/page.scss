@@ -59,6 +59,14 @@
                 //transition: border-color 1s infinite ease;
                 animation: buttonNotification 3s infinite ease-in-out;;
             }
+
+            .exclamationIcon{
+                position: absolute;
+                right: 50px;
+                margin-bottom: 40px;
+                background-color: rgba(255, 33, 33, 0.247);
+                border-radius: 25px;
+            }
         }
 
         .impressum{
