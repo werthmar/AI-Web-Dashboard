@@ -27,8 +27,8 @@ export default class Stallmonitor extends React.Component
 
             this.setState({
                 coordinates: [
-                    { x: 1, y: 2 }, // Example point
-                    { x: 3, y: 4 }, // Example point
+                    { x: 1000, y: 200, label: "kuh1" }, // Example point
+                    { x: 300, y: 400, label: "kuh2" }, // Example point
                     // Add more points as needed
                   ],
                 loading: false,
@@ -44,6 +44,7 @@ export default class Stallmonitor extends React.Component
 
     }
 
+    // for scaling, not used at the moment
     toSVGCoordinates(x, y) {
         const { padding, width, height } = this.state;
         const { minX, minY, maxX, maxY } = this.state;
@@ -82,10 +83,18 @@ export default class Stallmonitor extends React.Component
                         {/* Draw right border */}
                         <line x1={width - padding} y1={padding} x2={width - padding} y2={height - padding} stroke="black" />
 
-                        {/* Plot the points */}
+                        {/* Plot the points and labels */}
                         {coordinates.map((point, index) => {
-                            const [x, y] = this.toSVGCoordinates(point.x, point.y);
-                            return <circle key={index} cx={x} cy={y} r={3} fill="blue" />;
+                            //const [x, y] = this.toSVGCoordinates(point.x, point.y);
+                            const x = point.x;
+                            const y = point.y;
+                            const label = point.label;
+                            return (
+                                <g key={index}>
+                                    <circle cx={x} cy={y} r={8} fill="green" />
+                                    <text x={x} y={y + 20} fontSize="12" textAnchor="middle">{ label }</text>
+                                </g>
+                            );
                         })}
 
                     </svg>
