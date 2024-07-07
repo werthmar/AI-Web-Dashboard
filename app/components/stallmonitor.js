@@ -4,16 +4,15 @@ import LoadingAnimation from "./loading";
 
 export default class Stallmonitor extends React.Component
 {
+    // Legende stehend, liegend, transition
+    // neues bild in größer: 3000x...
+    // Koordinatensystem dann runterskalieren jeh nach bildschirmgröße
+
     constructor(props) {
         super(props);
         this.state = {
-          width: 1192,
-          height: 505,
-          padding: 0,
-          minX: 0,
-          maxX: 10,
-          minY: 0,
-          maxY: 10,
+          width: 3220,
+          height: 1775,
           coordinates: [{}],
           loading: true,
         };
@@ -29,6 +28,9 @@ export default class Stallmonitor extends React.Component
                 coordinates: [
                     { x: 1000, y: 200, label: "kuh1" }, // Example point
                     { x: 300, y: 400, label: "kuh2" }, // Example point
+                    { x: 671, y: 473, label: "kuh3" }, // Example point
+                    { x: 0, y: 0, label: "minimum" }, // Example point
+                    { x: 3220, y: 1775, label: "maximum" }, // Example point
                     // Add more points as needed
                   ],
                 loading: false,
@@ -44,19 +46,9 @@ export default class Stallmonitor extends React.Component
 
     }
 
-    // for scaling, not used at the moment
-    toSVGCoordinates(x, y) {
-        const { padding, width, height } = this.state;
-        const { minX, minY, maxX, maxY } = this.state;
-        const xScale = (width - 2 * padding) / (maxX - minX);
-        const yScale = (height - 2 * padding) / (maxY - minY);
-        const svgX = padding + (x - minX) * xScale;
-        const svgY = height - padding - (y - minY) * yScale;
-        return [svgX, svgY];
-    }
 
     render() {
-        const { width, height, padding, coordinates, loading } = this.state;
+        const { width, height, coordinates, loading } = this.state;
 
         if( loading )
         {
@@ -67,37 +59,33 @@ export default class Stallmonitor extends React.Component
             return (
                 <div className="stallmonitor center">
 
-                    <h1>LTW Stall</h1>
+                    <h1>LWK Stall</h1>
 
-                    <svg width={width} height={height}>
+                    <div className="svgContainer">
+                        {/*<svg width={width} height={height}>*/}
+                        <svg
+                            viewBox="0 0 3220 1775"
+                            width="100%"
+                            height="100%">
 
-                        {/* Background Image */}
-                        <image href={"Abbildung_LWK_Stall.png"} x={padding} y={padding} width={width - 2 * padding} height={height - 2 * padding} />
+                            {/* Background Image */}
+                            <image href={"Stall_LWK.png"} width={width} height={height} />
 
-                        {/* Draw x-axis */}
-                        <line x1={padding} y1={height - padding} x2={width - padding} y2={height - padding} stroke="black" />
-                        {/* Draw y-axis */}
-                        <line x1={padding} y1={padding} x2={padding} y2={height - padding} stroke="black" />
-                        {/* Draw top border */}
-                        <line x1={padding} y1={padding} x2={width - padding} y2={padding} stroke="black" />
-                        {/* Draw right border */}
-                        <line x1={width - padding} y1={padding} x2={width - padding} y2={height - padding} stroke="black" />
+                            {/* Plot the points and labels */}
+                            {coordinates.map((point, index) => {
+                                const x = point.x;
+                                const y = point.y;
+                                const label = point.label;
+                                return (
+                                    <g key={index}>
+                                        <circle cx={x} cy={y} r={30} fill="green" />
+                                        <text x={x} y={y + 70} fontSize="45" fontWeight={"bold"} textAnchor="middle">{ label }</text>
+                                    </g>
+                                );
+                            })}
 
-                        {/* Plot the points and labels */}
-                        {coordinates.map((point, index) => {
-                            //const [x, y] = this.toSVGCoordinates(point.x, point.y);
-                            const x = point.x;
-                            const y = point.y;
-                            const label = point.label;
-                            return (
-                                <g key={index}>
-                                    <circle cx={x} cy={y} r={8} fill="green" />
-                                    <text x={x} y={y + 20} fontSize="12" textAnchor="middle">{ label }</text>
-                                </g>
-                            );
-                        })}
-
-                    </svg>
+                        </svg>
+                    </div>
 
                 </div>
             );

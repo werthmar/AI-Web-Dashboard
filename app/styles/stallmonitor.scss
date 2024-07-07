@@ -10,15 +10,25 @@
         text-align: center;
         color: $text-color;
         margin-bottom: 20px;
-        font-size: 24px;
+        font-size: 44px;
         font-weight: 600;
     }
 
-    svg{
+    .svgContainer{
+        width: 80%;
+        height: 80%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         margin: auto;
-        //position: relative;
-        //top: 50%;
-        //left: 50%;
-        //transform: translate(-50%, -50%);
+        border: 2px solid black;
+        
+        svg{
+            margin: auto;
+            //position: relative;
+            //top: 50%;
+            //left: 50%;
+            //transform: translate(-50%, -50%);
+        }
     }
 }
