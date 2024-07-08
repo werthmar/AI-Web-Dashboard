@@ -17,6 +17,7 @@ export default class Page extends React.Component
       activeButton: 1,
       loading: false,
       messages: [],
+      coordinates: [],
       unreadMessage: false,
     };
     this.socket = null;
@@ -33,19 +34,22 @@ export default class Page extends React.Component
     
     this.socket.onmessage = (event) => {
 
-      const parsedMessage = JSON.parse(event.data);
+      const parsedData = JSON.parse(event.data);
       
-      switch (parsedMessage.type) {
+      switch (parsedData.type) {
+        
         case 'message':
-          //this.setState({ messageData: parsedMessage.data });
-          console.log(`MESSAGE RECEIVED ${parsedMessage.data}`);
-          this.handleMessage(parsedMessage.data)
+          console.log(`Message received ${parsedData.data}`);
+          this.handleMessage(parsedData.data);
           break;
+
         case 'coordinates':
-          //this.setState({ coordinatesData: parsedMessage.data });
+          console.log(`Coordinates received ${parsedData.data}`);
+          this.handleCoordinates(parsedData.data);
           break;
+
         default:
-          console.log('Unknown message type:', parsedMessage.type);
+          console.log(`Unknown message type: ${parsedData.type} data: ${parsedData.data}`);
       }
     };
 
@@ -62,6 +66,12 @@ export default class Page extends React.Component
     }
   }
   
+  handleCoordinates = (coordinates) => {
+      this.setState({
+        coordinates: coordinates
+      });
+  }
+
   handleMessage = (message) => {
     
     // Timestamp the message
@@ -118,7 +128,7 @@ export default class Page extends React.Component
   // Decide which element to display based on which button is active
   getViewportElement() {
     try {
-      const {loading, activeButton, messages} = this.state;
+      const {loading, activeButton, messages, coordinates} = this.state;
   
       if( loading )
       {
@@ -126,7 +136,7 @@ export default class Page extends React.Component
       }
       else if ( activeButton === 1 )
       {
-        return( <Stallmonitor /> );
+        return( <Stallmonitor coordinates={ coordinates } key={ coordinates } /> );
       }
       else if ( activeButton === 2 )
       {

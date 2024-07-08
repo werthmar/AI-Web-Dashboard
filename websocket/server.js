@@ -16,10 +16,10 @@
  * json body example 2:
  * {
  *    "type": "coordinates",
- *    "data": "[
+ *    "data": [
  *                { "x": 123, "y": 550, "label": "Kuh 1" },
  *                { "x": 123, "y": 550, "label": "Kuh 2" }
-*              ]"
+*              ]
  * }
 */
 

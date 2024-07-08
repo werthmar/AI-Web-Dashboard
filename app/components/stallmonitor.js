@@ -13,32 +13,35 @@ export default class Stallmonitor extends React.Component
         this.state = {
           width: 3220,
           height: 1614,
-          coordinates: [{}],
-          loading: true,
+          coordinates: this.props.coordinates,
+          loading: this.props.coordinates.length == 0 ? true : false, // Display loading screen as long as there are no coordinates to display
         };
     }
 
     // Load data here / start subscription
     componentDidMount() {
+        /**
+         * 
         try {
             
-            // subscribe here
-
-            this.setState({
-                coordinates: [
-                    { x: 1000, y: 200, label: "kuh1" }, // Example point
-                    { x: 300, y: 400, label: "kuh2" }, // Example point
-                    { x: 671, y: 473, label: "kuh3" }, // Example point
-                    { x: 0, y: 0, label: "minimum" }, // Example point
-                    { x: 3220, y: 1614, label: "maximum" }, // Example point
-                    // Add more points as needed
-                  ],
-                loading: false,
-            });
-
-        } catch (error) {
-            console.log(error);
-        }
+        // subscribe here
+        
+        this.setState({
+            coordinates: [
+                { x: 1000, y: 200, label: "kuh1" }, // Example point
+                { x: 300, y: 400, label: "kuh2" }, // Example point
+                { x: 671, y: 473, label: "kuh3" }, // Example point
+                { x: 0, y: 0, label: "minimum" }, // Example point
+                { x: 3220, y: 1614, label: "maximum" }, // Example point
+                // Add more points as needed
+            ],
+            loading: false,
+        });
+        
+    } catch (error) {
+        console.log(error);
+    }
+    */
     }
 
     // Unsubscribe in here
