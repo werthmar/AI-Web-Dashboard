@@ -26,27 +26,50 @@ export default class Page extends React.Component
   componentDidMount()
   {
     // Initialize WebSocket connection
-    this.socket = new WebSocket('wss://your-websocket-url');
+    this.socket = new WebSocket('ws://localhost:4000');
     
     // Listen for messages
-    this.socket.addEventListener('message', this.handleMessage);
+    //this.socket.addEventListener('message', this.handleMessage);
     
+    this.socket.onmessage = (event) => {
+
+      const parsedMessage = JSON.parse(event.data);
+      
+      switch (parsedMessage.type) {
+        case 'message':
+          //this.setState({ messageData: parsedMessage.data });
+          console.log(`MESSAGE RECEIVED ${parsedMessage.data}`);
+          this.handleMessage(parsedMessage.data)
+          break;
+        case 'coordinates':
+          //this.setState({ coordinatesData: parsedMessage.data });
+          break;
+        default:
+          console.log('Unknown message type:', parsedMessage.type);
+      }
+    };
+
     // Simulate a message after 3 seconds
-    this.simulateMessageAfterDelay();
+    //this.simulateMessageAfterDelay();
   }
 
   componentWillUnmount()
   {
     // Clean up the WebSocket connection
     if (this.socket) {
-      this.socket.removeEventListener('message', this.handleMessage);
+      //this.socket.removeEventListener('message', this.handleMessage);
       this.socket.close();
     }
   }
   
-  handleMessage = (event) => {
-    const newMessage = event.data;
+  handleMessage = (message) => {
     
+    // Timestamp the message
+    const newMessage = {
+      "text": message,
+      "timestamp": this.getTimestamp()
+    }
+
     // Update state with the new message
     this.setState((prevState) => ({
       messages: [...prevState.messages, newMessage],
