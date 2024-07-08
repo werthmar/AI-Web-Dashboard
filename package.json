@@ -7,8 +7,9 @@
     "next": "next dev",
     "websocket": "node websocket/server.js",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "start": "concurrently \"npm run start-next\" \"npm run websocket\"",
+    "start-next": "next start"
   },
   "dependencies": {
     "axios": "^1.7.2",
