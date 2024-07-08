@@ -12,7 +12,7 @@ export default class Stallmonitor extends React.Component
         super(props);
         this.state = {
           width: 3220,
-          height: 1775,
+          height: 1614,
           coordinates: [{}],
           loading: true,
         };
@@ -30,7 +30,7 @@ export default class Stallmonitor extends React.Component
                     { x: 300, y: 400, label: "kuh2" }, // Example point
                     { x: 671, y: 473, label: "kuh3" }, // Example point
                     { x: 0, y: 0, label: "minimum" }, // Example point
-                    { x: 3220, y: 1775, label: "maximum" }, // Example point
+                    { x: 3220, y: 1614, label: "maximum" }, // Example point
                     // Add more points as needed
                   ],
                 loading: false,
@@ -62,9 +62,9 @@ export default class Stallmonitor extends React.Component
                     <h1>LWK Stall</h1>
 
                     <div className="svgContainer">
-                        {/*<svg width={width} height={height}>*/}
+                        {/*<svg width={width} height={height}> "0 0 3220 1775" */}
                         <svg
-                            viewBox="0 0 3220 1775"
+                            viewBox= {`0 0 ${width} ${height}`}
                             width="100%"
                             height="100%">
 
