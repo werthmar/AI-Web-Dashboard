@@ -17,8 +17,8 @@
  * {
  *    "type": "coordinates",
  *    "data": [
- *                { "x": 123, "y": 550, "label": "Kuh 1" },
- *                { "x": 123, "y": 550, "label": "Kuh 2" }
+ *                { "x": 123, "y": 550, "label": "Kuh 1", "status": 1 },
+ *                { "x": 123, "y": 550, "label": "Kuh 2", "status": 0 }
 *              ]
  * }
 */

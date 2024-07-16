@@ -52,6 +52,9 @@ export default class Stallmonitor extends React.Component
 
     render() {
         const { width, height, coordinates, loading } = this.state;
+        const green = 'rgb(34, 197, 94)';
+        const red = 'rgb(239, 68, 68)';
+        const blue = 'rgb(59, 130, 246)';
 
         if( loading )
         {
@@ -79,15 +82,47 @@ export default class Stallmonitor extends React.Component
                                 const x = point.x;
                                 const y = point.y;
                                 const label = point.label;
+
+                                var color;
+                                switch (point.status)
+                                {
+                                    case 0:
+                                        color = red;
+                                        break;
+                                    case 1:
+                                        color = green;
+                                        break;
+                                    case 2:
+                                        color = blue;
+                                        break;
+                                }
+
                                 return (
                                     <g key={index}>
-                                        <circle cx={x} cy={y} r={30} fill="green" />
+                                        <circle cx={x} cy={y} r={30} fill={color} />
                                         <text x={x} y={y + 70} fontSize="45" fontWeight={"bold"} textAnchor="middle">{ label }</text>
                                     </g>
                                 );
                             })}
 
                         </svg>
+                    </div>
+
+                    <div className="flex justify-center legend">
+                        <div className="flex space-x-4">
+                            <div className="flex items-center">
+                                <div className="w-5 h-5 mr-2 rounded-full" style={{"backgroundColor": red}} />
+                                <span>Liegend</span>
+                            </div>
+                            <div className="flex items-center">
+                                <div className="w-5 h-5 mr-2 rounded-full" style={{"backgroundColor": green}} />
+                                <span>Transition</span>
+                            </div>
+                            <div className="flex items-center">
+                                <div className="w-5 h-5 mr-2 rounded-full" style={{"backgroundColor": blue}} />
+                                <span>Stehend</span>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
