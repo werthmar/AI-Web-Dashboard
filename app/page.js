@@ -18,6 +18,7 @@ export default class Page extends React.Component
       loading: false,
       messages: [],
       coordinates: [],
+      temperature: {},
       unreadMessage: false,
     };
     this.socket = null;
@@ -46,6 +47,11 @@ export default class Page extends React.Component
         case 'coordinates':
           console.log(`Coordinates received ${parsedData.data}`);
           this.handleCoordinates(parsedData.data);
+          break;
+          
+        case 'temperature':
+          console.log(`Coordinates received ${parsedData.data}`);
+          this.handleTemperature(parsedData.data);
           break;
 
         default:
@@ -90,6 +96,12 @@ export default class Page extends React.Component
     // Perform any additional actions with the new message
   };
   
+  handleTemperature = (temperature) => {
+    this.setState({
+      temperature: temperature
+    });
+  }
+
   // Method to manually trigger a message event after a delay
   simulateMessageAfterDelay = () => {
     setTimeout(() => {
@@ -128,7 +140,7 @@ export default class Page extends React.Component
   // Decide which element to display based on which button is active
   getViewportElement() {
     try {
-      const {loading, activeButton, messages, coordinates} = this.state;
+      const {loading, activeButton, messages, coordinates, temperature} = this.state;
   
       if( loading )
       {
@@ -144,7 +156,7 @@ export default class Page extends React.Component
       }
       else if ( activeButton === 3 )
       {
-        return( <Klimadaten /> );
+        return( <Klimadaten temperature= { temperature } key={ temperature.currentTemperature } /> );
       }
       else if ( activeButton === 4 )
       {

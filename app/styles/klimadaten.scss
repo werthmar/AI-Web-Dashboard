@@ -1,10 +1,23 @@
 @import "./globals.scss";
 
 .klimadaten{
+    background-color: rgb(255, 255, 255);
+    width: 85%;
+    height: 85%;
+    border-radius: 25px;
 
     .temperatureDisplay{
-        background-color: rgb(255, 255, 255);
         padding: 40px;
         border-radius: 100px;
+
+        h1{
+            font-size: 30px;
+            font-weight: bold;
+        }
     }
+
+    .averageTemperature{
+        padding: 0px 20px 0px 20px;
+    }
+
 }

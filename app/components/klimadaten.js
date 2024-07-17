@@ -2,61 +2,165 @@ import React, { Component } from 'react';
 import { FaThermometerHalf } from 'react-icons/fa';
 import "../styles/klimadaten.scss";
 import { motion } from 'framer-motion';
+import { Line } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+import LoadingAnimation from "./loading";
+
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, ChartDataLabels);
 
 class Klimadaten extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      temperature: null,
+      temperature: props.temperature.currentTemperature,
+      averageTemperatures: props.temperature.averageTemperatures,
+      loading: props.temperature.averageTemperatures == undefined ? true : false, // Display loading screen as long as there are no coordinates to display
     };
+
   }
 
   componentDidMount() {
-    this.fetchTemperature();
-    this.temperatureInterval = setInterval(this.fetchTemperature, 5000); // Fetch every 5 seconds
+    
   }
 
   componentWillUnmount() {
-    clearInterval(this.temperatureInterval);
+    
   }
 
-  fetchTemperature = () => {
-    /*
-    fetch('https://api.example.com/temperature') // Replace with your server endpoint
-      .then(response => response.json())
-      .then(data => {
-        this.setState({ temperature: data.temperature });
-      })
-      .catch(error => {
-        console.error('Error fetching temperature:', error);
-      });
-    */
+  // The chart which displayes the average temperatures of the last days 
+  TemperatureChart = ( data ) => {
+    const chartData = {
+      labels: data.map(item => item.day),
+      datasets: [
+        {
+          label: 'Tagestemperatur',
+          data: data.map(item => item.dayTemp),
+          borderColor: 'rgba(75, 192, 192, 1)',
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          datalabels: {
+            align: 'end',
+            anchor: 'end'
+          }
+        },
+        {
+          label: 'Nachttemperatur',
+          data: data.map(item => item.nightTemp),
+          borderColor: 'rgba(153, 102, 255, 1)',
+          backgroundColor: 'rgba(153, 102, 255, 0.2)',
+          datalabels: {
+            align: 'end',
+            anchor: 'end'
+          }
+        },
+      ],
+    };
+  
+    const options = {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: {
+          font: {
+              size: 20,
+            },
+          },
+        },
+        title: {
+          display: true,
+          text: 'Durschnittstemperatur der letzten 7 Tage',
+          font: {
+            size: 24,
+          },
+        },
+        datalabels: {
+          display: true,
+          color: 'black',
+          formatter: (value) => `${value}°C`,
+        },
+      },
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: 'Wochentage',
+            font: {
+              size: 18,
+            },
+          },
+          offset: true, // prevents points for first day overlapping with y axis
+        },
+        y: {
+          title: {
+            display: true,
+            text: 'Temperatur (°C)',
+            font: {
+              size: 18,
+            },
+          },
+          ticks: {
+            beginAtZero: true, // Ensures the y-axis starts from zero
+          },
+        },
+      },
+      layout: {
+        padding: {
+          left: 20, // Add padding to the left
+          right: 20, // Add padding to the right
+          top: 20, // Add padding to the top
+          bottom: 20, // Add padding to the bottom
+        },
+      }
 
-    // Simulate fetching a random temperature
-    const randomTemperature = (Math.random() * 40).toFixed(2); // Generate a random temperature between 0 and 40°C
-    this.setState({ temperature: randomTemperature });
+    };
+  
+    return <Line data={chartData} options={options} className='averageTemperature' />;
   };
+  
 
   render() {
-    const { temperature } = this.state;
+    const { temperature, averageTemperatures, loading } = this.state;
 
-    return (
-      <div className="flex items-center justify-center h-screen klimadaten">
-        <div className="flex items-center space-x-2 temperatureDisplay">
-          <FaThermometerHalf className="text-4xl text-red-500" />
-          <motion.span
-            className="text-2xl font-semibold text-gray-800"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 2.0 }}
-            key={temperature} // key prop forces re-render and animation
-          >
-            {temperature !== null ? `${temperature}°C` : 'Loading...'}
-          </motion.span>
+    if( loading )
+    {
+      return <LoadingAnimation />
+    }
+    else
+    {
+      return (
+        <div className="flex items-center justify-center h-screen">
+
+          <div className='klimadaten'>
+
+
+
+            <div className="flex items-center justify-center space-x-2 temperatureDisplay">
+              <h1>Aktuelle Temperatur:</h1>
+              <FaThermometerHalf className="text-6xl text-red-500" />
+              <motion.span
+                className="text-2xl font-semibold text-gray-800"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 2.0 }}
+                key={temperature} // key prop forces re-render and animation
+              >
+                <h1 key={temperature}>{temperature !== null ? `${temperature}°C` : 'Loading...'}</h1>
+              </motion.span>
+            </div>
+
+            <div className='flex'>
+              {this.TemperatureChart( averageTemperatures )}
+            </div>
+
+          </div>
+
         </div>
-      </div>
-    );
+      );
+    }
+  
   }
+
 }
 
 export default Klimadaten;
