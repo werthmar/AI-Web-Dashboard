@@ -1,0 +1,36 @@
+.impressum{
+
+    h1{
+        font-size: 30px;
+        font-weight: bold;
+    }
+
+    h2{
+        font-size: 22px;
+    }
+
+    h4{
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    p{
+        font-size: 16px;
+    }
+
+    ul {
+        list-style-type: square; /* Adds bullet points */
+        padding-left: 1.25rem; /* Adds padding to the left for indentation */
+        margin: 0; /* Adjusts margin as needed */
+    }
+    
+    .listTitle {
+        font-weight: bold; /* Makes the title bold */
+        list-style-type: none; /* Removes bullet point from the title */
+        margin-bottom: 0.75rem; /* Adds space below the title */
+    }
+
+    li {
+        margin-bottom: 0.5rem; /* Adds space between list items */
+    }
+}

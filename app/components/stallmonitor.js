@@ -15,7 +15,9 @@ export default class Stallmonitor extends React.Component
           height: 1614,
           coordinates: this.props.coordinates,
           loading: this.props.coordinates.length == 0 ? true : false, // Display loading screen as long as there are no coordinates to display
+          checked: false,
         };
+        this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
     }
 
     // Load data here / start subscription
@@ -44,17 +46,35 @@ export default class Stallmonitor extends React.Component
     */
     }
 
-    // Unsubscribe in here
-    componentWillUnmount() {
+    
+    // This method is called when the component receives new props
+    componentDidUpdate(prevProps) {
+        // Update coordinate system without affecting checkbox
+        if(prevProps.coordinates !== this.props.coordinates) {
+            this.setState({
+                coordinates: this.props.coordinates,
+                loading: false,
+             });
+        }
+    }
+    
 
+    // Checkbox onClick
+    handleCheckboxChange(event) {
+        const isChecked = event.target.checked;
+        this.setState({ checked: isChecked });
+        if (this.props.onChange) {
+          this.props.onChange(isChecked);
+        }
     }
 
-
+    // --- Render -----------------------------------------
     render() {
-        const { width, height, coordinates, loading } = this.state;
+        const { width, height, coordinates, loading, checked } = this.state;
         const green = 'rgb(34, 197, 94)';
         const red = 'rgb(239, 68, 68)';
         const blue = 'rgb(59, 130, 246)';
+        const orange = 'rgb(255, 165, 0)';
 
         if( loading )
         {
@@ -75,7 +95,7 @@ export default class Stallmonitor extends React.Component
                             height="100%">
 
                             {/* Background Image */}
-                            <image href={"Stall_LWK.png"} width={width} height={height} />
+                            <image href={"Stall_LWK_new.png"} width={width} height={height} />
 
                             {/* Plot the points and labels */}
                             {coordinates.map((point, index) => {
@@ -83,24 +103,31 @@ export default class Stallmonitor extends React.Component
                                 const y = point.y;
                                 const label = point.label;
 
+                                // Display the cow status with color if the checkbox is enabled otherwise just use one color
                                 var color;
-                                switch (point.status)
+                                if(checked)
                                 {
-                                    case 0:
-                                        color = red;
-                                        break;
-                                    case 1:
-                                        color = green;
-                                        break;
-                                    case 2:
-                                        color = blue;
-                                        break;
+                                    switch (point.status)
+                                    {
+                                        case 0:
+                                            color = red;
+                                            break;
+                                        case 1:
+                                            color = green;
+                                            break;
+                                        case 2:
+                                            color = blue;
+                                            break;
+                                    }
+                                } else
+                                {
+                                    color = orange;
                                 }
 
                                 return (
                                     <g key={index}>
-                                        <circle cx={x} cy={y} r={30} fill={color} />
-                                        <text x={x} y={y + 70} fontSize="45" fontWeight={"bold"} textAnchor="middle">{ label }</text>
+                                        <circle cx={x} cy={y} r={15} fill={color} />
+                                        {/*<text x={x} y={y + 70} fontSize="45" fontWeight={"bold"} textAnchor="middle">{ label }</text>*/}
                                     </g>
                                 );
                             })}
@@ -110,17 +137,30 @@ export default class Stallmonitor extends React.Component
 
                     <div className="flex justify-center legend">
                         <div className="flex space-x-4">
-                            <div className="flex items-center">
+                            {/** Legend */}
+                            <div className="flex items-center" style={{ display: checked? '' : 'none' }}>
                                 <div className="w-5 h-5 mr-2 rounded-full" style={{"backgroundColor": red}} />
                                 <span>Liegend</span>
                             </div>
-                            <div className="flex items-center">
+                            <div className="flex items-center" style={{ display: checked? '' : 'none' }}>
                                 <div className="w-5 h-5 mr-2 rounded-full" style={{"backgroundColor": green}} />
                                 <span>Transition</span>
                             </div>
-                            <div className="flex items-center">
+                            <div className="flex items-center" style={{ display: checked? '' : 'none' }}>
                                 <div className="w-5 h-5 mr-2 rounded-full" style={{"backgroundColor": blue}} />
                                 <span>Stehend</span>
+                            </div>
+                            {/** Checkbox */}
+                            <div className="flex items-center">
+                                <label className="inline-flex items-center space-x-2 cursor-pointer">
+                                    <input
+                                    type="checkbox"
+                                    className="checkbox form-checkbox h-5 w-5"
+                                    checked={checked}
+                                    onChange={this.handleCheckboxChange}
+                                    />
+                                    <span>Status anzeigen</span>
+                                </label>
                             </div>
                         </div>
                     </div>
