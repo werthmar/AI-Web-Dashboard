@@ -9,10 +9,13 @@ export default class Assistenzsystem extends React.Component
         this.state = {
             messages: this.props.messages,
             oldMessages: [],
+            saveMessages: this.props.saveMessages,
         }
     }
 
     // --- Functions ---
+    /**
+     * Moved to page.js because the messages come from props and it causes duplicates otherwise
     saveMessages = async () => {
         try {
             const data = this.state.messages;
@@ -25,7 +28,12 @@ export default class Assistenzsystem extends React.Component
         } catch (error) {
             console.error('Error saving file:', error);
             alert('Error saving file. Please try again.');
-          }
+        }
+    }
+    */
+
+    saveMessages = () => {
+        this.state.saveMessages();
     }
 
     showAllMessages = async () => {
@@ -59,21 +67,24 @@ export default class Assistenzsystem extends React.Component
     // --- Render ---
     render() {
         const { messages, oldMessages } = this.state;
+        // reverse messages to display new ones first
+        const reversedmessages = [...messages].reverse(); 
+        const reversedOldMessages = [...oldMessages].reverse(); 
 
         return(
             <div className="center Assistenzsystem">
 
                 <div className="message-container">
-                    {/* Old Messages displayed in grey on button click */}
-                    {oldMessages.map((message, index) => (
-                        <div key={index} className='message old'>
+                    {/* New messages diplayed in blue */}
+                    {reversedmessages.map((message, index) => (
+                        <div key={index} className='message new'>
                             <div>{message.text}</div>
                             <div className="timestamp">{message.timestamp}</div>
                         </div>
                     ))}
-                    {/* New messages diplayed in blue */}
-                    {messages.map((message, index) => (
-                        <div key={index} className='message new'>
+                    {/* Old Messages displayed in grey on button click */}
+                    {reversedOldMessages.map((message, index) => (
+                        <div key={index} className='message old'>
                             <div>{message.text}</div>
                             <div className="timestamp">{message.timestamp}</div>
                         </div>

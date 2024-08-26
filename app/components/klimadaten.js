@@ -149,7 +149,7 @@ class Klimadaten extends Component {
               </motion.span>
             </div>
 
-            <div className='flex'>
+            <div className='relative w-full h-full min-h-[400px] min-w-[400px]'>
               {this.TemperatureChart( averageTemperatures )}
             </div>
 
