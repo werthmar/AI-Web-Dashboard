@@ -1,12 +1,13 @@
 # AI-Web-Dashboard
 
 ## Overview
-AI-Web-Dashboard is a web application designed to provide a user-friendly interface for visualizing and interacting with AI data. It leverages modern web technologies to offer an efficient and intuitive user experience.
+AI-Web-Dashboard is a web application designed to provide a user-friendly interface for visualizing and interacting with AI data. It leverages modern web technologies to offer an efficient and intuitive user experience. AI data is send from a python server. Examples for connecting python to the dashboard are included.
 
 ## Tech Stack
 - **Next.js**: A React framework for building server-side rendering and static web applications.
 - **React**: A JavaScript library for building user interfaces.
 - **Express**: A web application framework for Node.js.
+- **Python**
 - **WebSocket**: A protocol for full-duplex communication channels over a single TCP connection.
 - **Chart.js**: A JavaScript library for creating charts.
 - **Tailwind CSS**: A utility-first CSS framework.
